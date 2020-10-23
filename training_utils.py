@@ -1,4 +1,4 @@
-def train(env, agent, fingerprint_provider, n_episodes, episode_length):
+def train(env, agent, fingerprint_provider, n_episodes, episode_length, episode_callback=None):
     molecule_pool = set()
     bestreward = 0
 
@@ -27,6 +27,9 @@ def train(env, agent, fingerprint_provider, n_episodes, episode_length):
                 bestreward = reward
 
             if done: break
+            
+        if episode_callback is not None:
+            episode_callback(reward)
 
         agent.learn(100)
     
