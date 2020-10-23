@@ -201,6 +201,9 @@ class MorganFingerprintProvider():
     def get_fingerprint(self, mol):
         return get_fingerprint(mol, self.hparams)
 
+    def get_fingerprint_raw(self, mol):
+        return get_fingerprint_raw(mol, self.hparams)
+
 def get_fingerprint(smiles, hparams):
     """Get Morgan Fingerprint of a specific SMILES string.
     Args:
