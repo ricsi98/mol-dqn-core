@@ -126,8 +126,6 @@ class BootstrappedDQN():
         self.q_online = BootstrappedQNetwork(input_size, action_size, layers, n_heads)
         self.q_target = BootstrappedQNetwork(input_size, action_size, layers, n_heads)
 
-        self.action_space = [i for i in range(action_size)]
-
         self.gamma = gamma
         self.tau = tau
         self.eps  = eps_start
@@ -150,8 +148,8 @@ class BootstrappedDQN():
             q_values = torch.tensor([self.q_online.forward(state, action) for action in actions])
             action = torch.argmax(q_values).item()
         else:
-            action = random.choice(self.action_space)
-
+            action = np.random.randint(0, len(actions))
+        
         return action
 
     def learn(self, batch_size):
@@ -170,6 +168,7 @@ class BootstrappedDQN():
             
             with torch.no_grad():
                 next_q = torch.max(torch.tensor([self.q_target.forward(state_, a_).item() for a_ in next_possible_actions]))
+
                 td = reward + self.gamma * next_q * (1-done)
 
             loss = self.mse(current_q[0], td)

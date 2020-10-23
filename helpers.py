@@ -165,6 +165,10 @@ def logp(mol):
 def sas(mol):
     return sascorer.calculateScore(mol)
 
+def sas_smiles(mol):
+    mol = Chem.MolFromSmiles(mol)
+    return sascorer.calculateScore(mol)
+
 def qed(mol):
 	return QED.qed(Chem.MolFromSmiles(mol))
 
